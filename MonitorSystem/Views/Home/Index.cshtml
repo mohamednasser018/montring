@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    /**/
+    Layout = "";
+}
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <a href="javascript:document.getElementById('logoutForm').submit()" id="logoutLink"></a>
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Alkhawarizmi-BackEnd Dashboard</title>
+    <base href="/">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="/css/vex.css" type="text/css">
+    @Styles.Render("~/bundles/Angularcss")
+</head>
+<body dir="ltr">
+    <div id="vex-splash-screen">
+        <div class="wrapper">
+            <div class="ball-scale-multiple">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <vex-root></vex-root>
+    @Html.AntiForgeryToken()
+    @Scripts.Render("~/bundles/Angular")
+</body>
+</html>

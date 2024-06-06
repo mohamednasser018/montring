@@ -1,0 +1,115 @@
+﻿@using BackEndTemplate.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/AngularPage.cshtml";
+    @Styles.Render("~/Content/login.css")
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/plugins/jsencrypt.min.js"></script>
+}
+
+<div class="main-content" style="padding-top:0px;">
+    <div class="container-fluid">
+        <div class="col-md-12">
+                <div style="text-align: center; cursor: pointer;  ">
+                    <a href="javascript:void(0)" >
+                        <img src="~/assets/img/alkhawarizmi-logo.png" class="img-fluid" style="max-width: 150px; height: auto; padding-top:25px" />
+                    </a>
+                </div>
+
+                <div class="signin-title" style="text-align:center">
+                    <h2 style="font-family: 'Google Sans', sans-serif !important;">
+                        Sign in to Alkhawarizmi
+                    </h2>
+                </div>
+
+                <div class="login-container" style="padding-top: 15px;">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                       
+                            @Html.LabelFor(m => m.UserName, new { @class = " " })
+                            <span style="color:#ff5252">*</span>
+                            <input type="text"   class="input" id="user_name" />
+                            @Html.HiddenFor(m => m.UserName)
+                            <div>
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "is-danger" })
+                            </div>
+                        
+                        
+                        @Html.LabelFor(m => m.Password, new { @class = " " })
+                        <span style="color:#ff5252">*</span>
+                        <input type="password" autocomplete="off" class="input" id="user_pass"/>
+                         
+                        @Html.HiddenFor(m => m.Password)
+                        <div>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "is-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" onclick="SubmitsEncry();" style="width: 100%; background-color: #ff9800; height: 56px; font-size: 16px; letter-spacing: 2px;color: #ffffff;" class="btn  ">
+                            LOGIN
+
+                        </button>
+                        <div style="margin-top:16px; text-align: center">
+                          <!--  <p>
+                                Don't have an account yet?
+                                @Html.ActionLink("Sign up", "Register", null, new { @style = "color: #03a5e8" })
+
+                            </p>-->
+                            <p style="color: #666666; font-size: 1.1em; text-align: center; margin-top: 16px;">
+                                Forgot your password?   @Html.ActionLink("ClickHere", "ForgotPassword", null, new { @style = "color: #03a5e8; cursor:pointer" })
+                            </p>
+                        </div>
+                    }
+                 
+                </div>
+            </div>
+    </div>
+</div>
+
+
+<script>
+
+    function SubmitsEncry() {
+        debugger;
+        var txtUserName = $('#user_name').val();
+        var txtpassword = $('#user_pass').val();
+
+        var encryptedlogin = encrypt(txtUserName);
+
+        $('#UserName').val(encryptedlogin);
+
+        var encryptedpassword = encrypt(txtpassword);
+
+        $('#Password').val(encryptedpassword);
+    }
+
+
+    function encrypt(utterance) {
+        var publicKey = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8Ywd5XN/TA4qFL1vIt+vcpWnc
++5dttwXa+EVAzCQEapN8uwEm5dg8+hu122n/haeqct+WKWymrBEt3FCL/3sjj3h4
+OVqk+TTOlFrhBv8fjr8kGVwHJY+6d0PvTov5siJEtO6Zx721LZkLCkRayNSBx7/g
+n+MGWmZKV9nPgrTM3QIDAQAB
+-----END PUBLIC KEY-----`;
+        // we create a new JSEncrypt object for rsa encryption
+        var rsaEncrypt = new JSEncrypt();
+        // we set the public key (which we passed into the function)
+        rsaEncrypt.setPublicKey(publicKey);  // now we encrypt the key & iv with our public key
+        var encryptedKey = rsaEncrypt.encrypt(utterance)
+        return encryptedKey;
+    }
+
+
+</script>

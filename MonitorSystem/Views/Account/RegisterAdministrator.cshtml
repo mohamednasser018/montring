@@ -1,0 +1,88 @@
+﻿@model BackEndTemplate.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "RegisterAdministrator";
+    Layout = "~/Views/Shared/AngularPage.cshtml";
+    @Styles.Render("~/Content/register.css")
+}
+
+
+<div class="main-content" style="padding-top:0px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div style="text-align: center; cursor: pointer; ">
+                    <!-- max-width: 100%; -->
+                    <a href="javascript:void(0)">
+                        <img src="~/assets/img/alkhawarizmi-logo.png" class="img-fluid" style="max-width: 150px; height: auto; padding-top:25px" />
+                    </a>
+                </div>
+
+                <div class="signup-title" style="text-align:center">
+                    <h2 style="font-family: 'Google Sans', sans-serif !important; ">
+                        Let's set up your Alkhawarizmi Live Chat
+                    </h2>
+                </div>
+
+                <div class="login-container" style="padding-top: 15px;">
+
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+
+                        @Html.LabelFor(m => m.FirstName, new { @class = " " })
+                        <span style="color:#ff5252">*</span>
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "  input" })
+                        <div>
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "is-danger" })
+                        </div>
+                        @Html.LabelFor(m => m.LastName, new { @class = " " })
+                        <span style="color:#ff5252">*</span>
+                        @Html.TextBoxFor(m => m.LastName, new { @class = " input" })
+                        <div>
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "is-danger" })
+                        </div>
+                        @Html.LabelFor(m => m.Email, new { @class = " " })
+                        <span style="color:#ff5252">*</span>
+                        @Html.TextBoxFor(m => m.Email, new { @class = " input" })
+                        <div>
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "is-danger" })
+                        </div>
+                        @Html.LabelFor(m => m.Password, new { @class = " " })
+                        <span style="color:#ff5252">*</span>
+                        @Html.PasswordFor(m => m.Password, new { @class = "  input" })
+                        <div>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "is-danger" })
+                        </div>
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = " " })
+                        <span style="color:#ff5252">*</span>
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "  input" })
+                        <div>
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "is-danger" })
+                        </div>
+
+                        <button style="width: 100%; background-color: #ff9800; height: 56px; font-size: 16px; letter-spacing: 2px; color: #ffffff;" type="submit" class="btn">
+                            <span>
+                                SIGN UP
+
+                            </span>
+
+                        </button>
+
+                    }
+
+                </div>
+                <!-- ./login-container -->
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
